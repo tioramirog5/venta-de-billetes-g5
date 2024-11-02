@@ -89,12 +89,18 @@
         <h1>Billetes G5 de Colección</h1>
         <img src="billete-g5.jpg" alt="Billete G5 de colección, edición limitada">
         <p class="description">Descubre los billetes G5 de colección, una pieza única para los amantes del coleccionismo. Cada billete es cuidadosamente preservado para mantener su calidad.</p>
-        <p class="price">Precio: $100 USD</p>
+        <div class="price">
+            <p>1 fajo (10 billetes): Solo $80,000</p>
+            <p>2 fajos (20 billetes): Solo $150,000</p>
+            <p>3 fajos (30 billetes): Solo $220,000</p>
+            <p>4 fajos (40 billetes): Solo $300,000</p>
+            <p>5 fajos (50 billetes): Solo $350,000</p>
+        </div>
         <button onclick="mostrarMensaje()">Comprar ahora</button>
         
         <h2>Contacto</h2>
         <div class="form-container">
-            <form id="contactForm">
+            <form id="contactForm" method="POST">
                 <div class="form-group">
                     <label for="nombre">Nombre:</label>
                     <input type="text" id="nombre" name="nombre" required>
@@ -112,19 +118,33 @@
         </div>
         
         <div class="social-links">
-            <a href="https://www.tiktok.com" target="_blank">Síguenos en TikTok @tioramirog5_</a>
-            <a href="https://www.instagram.com" target="_blank">Síguenos en Instagram "tioramirog5"</a>
+            <a href="https://www.tiktok.com" target="_blank">Síguenos en TikTok</a>
+            <a href="https://www.instagram.com" target="_blank">Síguenos en Instagram</a>
         </div>
     </div>
     <script>
         function mostrarMensaje() {
             alert('¡Gracias por tu interés en los billetes G5 de colección! Completa el formulario de contacto para más información.');
         }
-
-        document.getElementById('contactForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            alert('Formulario enviado. Nos pondremos en contacto contigo pronto.');
-        });
     </script>
+
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $nombre = $_POST['nombre'];
+        $email = $_POST['email'];
+        $mensaje = $_POST['mensaje'];
+
+        $to = "tioramirog5@gmail.com"; // Tu dirección de correo
+        $subject = "Nuevo mensaje de contacto";
+        $body = "Nombre: $nombre\nCorreo: $email\nMensaje: $mensaje";
+        $headers = "From: $email";
+
+        if (mail($to, $subject, $body, $headers)) {
+            echo "<script>alert('Mensaje enviado con éxito.');</script>";
+        } else {
+            echo "<script>alert('Error al enviar el mensaje.');</script>";
+        }
+    }
+    ?>
 </body>
 </html>
